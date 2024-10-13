@@ -3,7 +3,7 @@ fun! Start()
         return
     endif
 
-    enew
+    enew 
 
     setlocal
         \ bufhidden=wipe
@@ -60,9 +60,6 @@ fun! Start()
     call append('$', ascii_art)
     setlocal nomodifiable nomodified
 
-    nnoremap <buffer><silent> e :enew<CR>
-    nnoremap <buffer><silent> i :enew <bar> startinsert<CR>
-    nnoremap <buffer><silent> o :enew <bar> startinsert<CR>
 endfun
 
 autocmd VimEnter * call Start()
