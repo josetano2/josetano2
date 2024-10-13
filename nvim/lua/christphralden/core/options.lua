@@ -18,6 +18,18 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 		opt.wrap = true
 	end,
 })
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "astro",
+	callback = function()
+		vim.opt_local.swapfile = false
+	end,
+})
+
+vim.api.nvim_create_autocmd("VimLeave", {
+	callback = function()
+		os.execute("rm -f ~/.local/share/nvim/swap/*")
+	end,
+})
 -- search setting
 opt.ignorecase = true
 opt.smartcase = true
