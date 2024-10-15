@@ -77,20 +77,44 @@ local background_with_wallpaper = {
 -- Initialize with the wallpaper by default
 config.background = background_with_wallpaper
 
--- Toggle function between the two backgrounds
-config.keys = {
-	{
-		key = "b",
-		mods = "CTRL|SHIFT",
-		action = wez.action.EmitEvent("toggle-background"),
-	},
-	{
-		key = "r",
-		mods = "CTRL|SHIFT",
-		action = wez.action.ReloadConfiguration,
-	},
-}
+-- Leader
+config.leader = { key = "a", mods = "CTRL" }
 
+-- Keybinds
+config.keys = {
+	{ key = "a", mods = "LEADER|CTRL", action = wez.action({ SendString = "\x01" }) },
+	{ key = "-", mods = "LEADER", action = wez.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
+	{ key = "\\", mods = "LEADER", action = wez.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
+	{ key = "z", mods = "LEADER", action = "TogglePaneZoomState" },
+	{ key = "c", mods = "LEADER", action = wez.action({ SpawnTab = "CurrentPaneDomain" }) },
+	{ key = "h", mods = "LEADER", action = wez.action({ ActivatePaneDirection = "Left" }) },
+	{ key = "j", mods = "LEADER", action = wez.action({ ActivatePaneDirection = "Down" }) },
+	{ key = "k", mods = "LEADER", action = wez.action({ ActivatePaneDirection = "Up" }) },
+	{ key = "l", mods = "LEADER", action = wez.action({ ActivatePaneDirection = "Right" }) },
+	{ key = "H", mods = "LEADER|SHIFT", action = wez.action({ AdjustPaneSize = { "Left", 6 } }) },
+	{ key = "J", mods = "LEADER|SHIFT", action = wez.action({ AdjustPaneSize = { "Down", 5 } }) },
+	{ key = "K", mods = "LEADER|SHIFT", action = wez.action({ AdjustPaneSize = { "Up", 5 } }) },
+	{ key = "L", mods = "LEADER|SHIFT", action = wez.action({ AdjustPaneSize = { "Right", 5 } }) },
+	{ key = "1", mods = "LEADER", action = wez.action({ ActivateTab = 0 }) },
+	{ key = "2", mods = "LEADER", action = wez.action({ ActivateTab = 1 }) },
+	{ key = "3", mods = "LEADER", action = wez.action({ ActivateTab = 2 }) },
+	{ key = "4", mods = "LEADER", action = wez.action({ ActivateTab = 3 }) },
+	{ key = "5", mods = "LEADER", action = wez.action({ ActivateTab = 4 }) },
+	{ key = "6", mods = "LEADER", action = wez.action({ ActivateTab = 5 }) },
+	{ key = "7", mods = "LEADER", action = wez.action({ ActivateTab = 6 }) },
+	{ key = "8", mods = "LEADER", action = wez.action({ ActivateTab = 7 }) },
+	{ key = "9", mods = "LEADER", action = wez.action({ ActivateTab = 8 }) },
+	{ key = "&", mods = "LEADER|SHIFT", action = wez.action({ CloseCurrentTab = { confirm = true } }) },
+	{ key = "x", mods = "LEADER", action = wez.action({ CloseCurrentPane = { confirm = true } }) },
+	{ key = "n", mods = "SHIFT|CTRL", action = "ToggleFullScreen" },
+	{ key = "v", mods = "SHIFT|CTRL", action = wez.action.PasteFrom("Clipboard") },
+	{ key = "c", mods = "SHIFT|CTRL", action = wez.action.CopyTo("Clipboard") },
+	{ key = "+", mods = "SHIFT|CTRL", action = "IncreaseFontSize" },
+	{ key = "-", mods = "SHIFT|CTRL", action = "DecreaseFontSize" },
+	{ key = "0", mods = "SHIFT|CTRL", action = "ResetFontSize" },
+	{ key = "b", mods = "CTRL|SHIFT", action = wez.action.EmitEvent("toggle-background") },
+	{ key = "r", mods = "CTRL|SHIFT", action = wez.action.ReloadConfiguration },
+}
 -- Window options
 config.window_padding = {
 	left = 40,

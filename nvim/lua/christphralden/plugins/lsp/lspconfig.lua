@@ -8,6 +8,8 @@ if not cmp_nvim_lsp_status then
 	return
 end
 
+local configs = require("lspconfig.configs")
+
 -- local typescript_setup, typescript = pcall(require, "typescript")
 -- if not typescript_setup then
 -- 	return
@@ -78,10 +80,10 @@ lspconfig["cssls"].setup({
 })
 
 -- configure tailwindcss server
--- lspconfig["tailwindcss"].setup({
--- 	capabilities = capabilities,
--- 	on_attach = on_attach,
--- })
+lspconfig["tailwindcss"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
 
 lspconfig["emmet_ls"].setup({
 	capabilities = capabilities,
@@ -110,19 +112,19 @@ lspconfig["lua_ls"].setup({
 	},
 })
 
--- lspconfig["intelephense"].setup({
--- 	capabilities = capabilities,
--- 	on_attach = on_attach,
--- 	filetypes = { "php", "blade" },
--- 	settings = {
--- 		intelephense = {
--- 			files = {
--- 				associations = { "*.php", "*.blade.php" }, -- Associating .blade.php files as well
--- 				maxSize = 5000000,
--- 			},
--- 		},
--- 	},
--- })
+lspconfig["intelephense"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	filetypes = { "php", "blade" },
+	settings = {
+		intelephense = {
+			files = {
+				associations = { "*.php", "*.blade.php" }, -- Associating .blade.php files as well
+				maxSize = 5000000,
+			},
+		},
+	},
+})
 
 lspconfig["gopls"].setup({
 	on_attach = on_attach,

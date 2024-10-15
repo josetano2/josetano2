@@ -148,6 +148,9 @@ return packer.startup(function(use)
 		end,
 	})
 
+	-- laravel
+	use("neovim/nvim-lspconfig")
+
 	-- autosave
 	use({
 		"Pocco81/auto-save.nvim",

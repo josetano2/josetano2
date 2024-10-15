@@ -7,6 +7,7 @@ keymap.set("n", "i", "a", { noremap = true, silent = true })
 keymap.set("n", "a", "i", { noremap = true, silent = true })
 
 keymap.set("n", "<leader>nh", ":nohl<CR>")
+keymap.set("n", "<leader>ca", "ggvG$y<ESC>")
 
 keymap.set("n", "x", '"_x"')
 
@@ -36,6 +37,8 @@ keymap.set("n", "<C-i>", "<C-o>")
 
 -- transparent
 keymap.set("n", "<leader>t", ":TransparentToggle<CR>")
+
+-- compile cpp
 
 -- indentation
 keymap.set("n", ">", ">>")
