@@ -8,8 +8,6 @@ if not cmp_nvim_lsp_status then
 	return
 end
 
-local configs = require("lspconfig.configs")
-
 -- local typescript_setup, typescript = pcall(require, "typescript")
 -- if not typescript_setup then
 -- 	return
@@ -80,15 +78,21 @@ lspconfig["cssls"].setup({
 })
 
 -- configure tailwindcss server
-lspconfig["tailwindcss"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
+-- lspconfig["tailwindcss"].setup({
+-- 	capabilities = capabilities,
+-- 	on_attach = on_attach,
+-- })
 
 lspconfig["emmet_ls"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 	filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte", "astro" },
+})
+
+-- configure cpp server
+lspconfig["clangd"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
 })
 
 -- configure lua server (with special settings)
