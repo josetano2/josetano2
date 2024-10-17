@@ -32,6 +32,20 @@ fun! Start()
                 \ ]
 
     call append('$', ascii_art)
+    call append('$', ascii_art)
+    call append('$', ascii_art)
+    call append('$', ascii_art)
+    call append('$', ascii_art)
+    call append('$', ascii_art)
+    call append('$', ascii_art)
+    call append('$', ascii_art)
+    call append('$', ascii_art)
+    call append('$', ascii_art)
+    call append('$', ascii_art)
+    call append('$', ascii_art)
+    call append('$', ascii_art)
+    call append('$', ascii_art)
+    call append('$', ascii_art)
     setlocal nomodifiable nomodified
 endfun
 autocmd VimEnter * call Start()

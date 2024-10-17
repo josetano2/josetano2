@@ -65,6 +65,8 @@ return packer.startup(function(use)
 		end,
 	})
 
+	-- theme
+	use("EdenEast/nightfox.nvim")
 	-- fuzzy finding
 	-- use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- better sorting performance
 	use({ "nvim-telescope/telescope.nvim", branch = "0.1.x", requires = { { "nvim-lua/plenary.nvim" } } }) -- fuzzy finder [<action> + j, u]
