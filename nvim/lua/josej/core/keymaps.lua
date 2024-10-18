@@ -31,6 +31,8 @@ keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>")
 keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>") -- CHANGED
 
 -- telescope
+
+keymap.set("n", "<leader>u", "<cmd>Telescope live_grep<cr>") -- find files within current working directory, respects .gitignore
 keymap.set("n", "<leader>j", "<cmd>Telescope find_files<cr>") -- find files within current working directory, respects .gitignore
 keymap.set("n", "<C-o>", "<C-i>")
 keymap.set("n", "<C-i>", "<C-o>")
