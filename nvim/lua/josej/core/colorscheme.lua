@@ -1,62 +1,38 @@
-local status, _ = pcall(vim.cmd, "colorscheme duskfox")
+local status, _ = pcall(vim.cmd, "colorscheme kanagawa")
 if not status then
 	print("Colorscheme not found")
 	return
 end
 
--- Tokyonight setup
-require("tokyonight").setup({
-	style = "night", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
-	light_style = "day", -- The theme is used when the background is set to light
-	transparent = true, -- Enable this to disable setting the background color
-	terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
-	styles = {
-		comments = { italic = true },
-		keywords = { italic = true },
-		functions = { bold = true },
-		variables = {},
-		sidebars = "transparent", -- style for sidebars, see below
-		floats = "transparent", -- style for floating windows
+-- Default options:
+require("kanagawa").setup({
+	compile = false,
+	undercurl = true,
+	commentStyle = { italic = true },
+	functionStyle = {},
+	keywordStyle = { italic = true },
+	statementStyle = { bold = true },
+	typeStyle = {},
+	transparent = true, -- do not set background color
+	dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+	terminalColors = true, -- define vim.g.terminal_color_{0,17}
+	colors = { -- add/modify theme and palette colors
+		palette = {},
+		theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
 	},
-	sidebars = { "qf", "help", "vista_kind", "terminal", "packer" }, -- Set a darker background on sidebar-like windows.
-	day_brightness = 0.1, -- Adjusts the brightness of the colors of the Day style. Number between 0 and 1, from dull to vibrant colors
-	hide_inactive_statusline = false, -- Enabling this option will hide inactive statuslines and replace them with a thin border instead.
-	dim_inactive = false, -- dims inactive windows
-	lualine_bold = false, -- When true, section headers in the lualine theme will be bold
-	on_colors = function(colors)
-		colors.hint = colors.orange
-		colors.error = "#ff0000"
-	end,
-	on_highlights = function(hl, c)
-		local prompt = "#2d3149"
-		hl.TelescopeNormal = {
-			bg = c.bg_dark,
-			fg = c.fg_dark,
-		}
-		hl.TelescopeBorder = {
-			bg = c.bg_dark,
-			fg = c.bg_dark,
-		}
-		hl.TelescopePromptNormal = {
-			bg = prompt,
-		}
-		hl.TelescopePromptBorder = {
-			bg = prompt,
-			fg = prompt,
-		}
-		hl.TelescopePromptTitle = {
-			bg = prompt,
-			fg = prompt,
-		}
-		hl.TelescopePreviewTitle = {
-			bg = c.bg_dark,
-			fg = c.bg_dark,
-		}
-		hl.TelescopeResultsTitle = {
-			bg = c.bg_dark,
-			fg = c.bg_dark,
+	overrides = function(colors) -- add/modify highlights
+		local theme = colors.theme
+		return {
+			TelescopeTitle = { fg = theme.ui.special, bold = true },
+			TelescopePromptNormal = { bg = theme.ui.bg_p1 },
+			TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
+			TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
+			TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
+			TelescopePreviewNormal = { bg = theme.ui.bg_dim },
+			TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
 		}
 	end,
 })
--- Apply the colorscheme
-vim.cmd("colorscheme tokyonight")
+
+-- setup must be called before loading
+vim.cmd("colorscheme kanagawa-dragon")
