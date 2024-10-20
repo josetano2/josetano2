@@ -19,42 +19,29 @@ config.font_size = 12
 
 -- Color options
 
-config.color_scheme = "Palenight (Gogh)"
-
 config.colors = {
-	foreground = "#c0caf5", -- Foreground color
-	background = "#1a1b26", -- Background color
-	cursor_bg = "#c0caf5", -- Cursor background color
-	cursor_border = "#c0caf5", -- Cursor border color
-	cursor_fg = "#1a1b26", -- Cursor foreground color
-	selection_bg = "#33467C", -- Selection background color
-	selection_fg = "#c0caf5", -- Selection foreground color
-	ansi = {
-		"#15161E", -- Black
-		"#f7768e", -- Red
-		"#9ece6a", -- Green
-		"#e0af68", -- Yellow
-		"#7aa2f7", -- Blue
-		"#bb9af7", -- Magenta
-		"#7dcfff", -- Cyan
-		"#a9b1d6", -- White
-	},
-	brights = {
-		"#414868", -- Bright Black
-		"#f7768e", -- Bright Red
-		"#9ece6a", -- Bright Green
-		"#e0af68", -- Bright Yellow
-		"#7aa2f7", -- Bright Blue
-		"#bb9af7", -- Bright Magenta
-		"#7dcfff", -- Bright Cyan
-		"#c0caf5", -- Bright White
-	},
+	foreground = "#dcd7ba",
+	background = "#1f1f28",
+
+	cursor_bg = "#c8c093",
+	cursor_fg = "#c8c093",
+	cursor_border = "#c8c093",
+
+	selection_fg = "#c8c093",
+	selection_bg = "#2d4f67",
+
+	scrollbar_thumb = "#16161d",
+	split = "#16161d",
+
+	ansi = { "#090618", "#c34043", "#76946a", "#c0a36e", "#7e9cd8", "#957fb8", "#6a9589", "#c8c093" },
+	brights = { "#727169", "#e82424", "#98bb6c", "#e6c384", "#7fb4ca", "#938aa9", "#7aa89f", "#dcd7ba" },
+	indexed = { [16] = "#ffa066", [17] = "#ff5d62" },
 }
 
 -- Dimmer for background
 local dimmer = {
 	brightness = 0.05,
-	saturation = 0.75,
+	saturation = 0.9,
 }
 
 -- Define the two background options (wallpaper and transparent)
