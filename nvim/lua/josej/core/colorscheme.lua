@@ -35,4 +35,4 @@ require("kanagawa").setup({
 })
 
 -- setup must be called before loading
-vim.cmd("colorscheme kanagawa-dragon")
+vim.cmd("colorscheme kanagawa-wave")

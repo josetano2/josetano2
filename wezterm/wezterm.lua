@@ -9,7 +9,7 @@ config.default_prog = { "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powersh
 config.window_decorations = "RESIZE" -- "TITLE", "TITLE | RESIZE", "NONE"
 config.debug_key_events = false
 config.adjust_window_size_when_changing_font_size = false
-config.animation_fps = 1
+config.animation_fps = 24
 config.max_fps = 30
 config.scrollback_lines = 2000
 
@@ -41,7 +41,7 @@ config.colors = {
 -- Dimmer for background
 local dimmer = {
 	brightness = 0.05,
-	saturation = 0.9,
+	saturation = 1.25,
 }
 
 -- Define the two background options (wallpaper and transparent)
@@ -75,8 +75,8 @@ config.keys = {
 	{ key = "z", mods = "LEADER", action = "TogglePaneZoomState" },
 	{ key = "c", mods = "LEADER", action = wez.action({ SpawnTab = "CurrentPaneDomain" }) },
 	{ key = "h", mods = "LEADER", action = wez.action({ ActivatePaneDirection = "Left" }) },
-	{ key = "j", mods = "LEADER", action = wez.action({ ActivatePaneDirection = "Down" }) },
-	{ key = "k", mods = "LEADER", action = wez.action({ ActivatePaneDirection = "Up" }) },
+	{ key = "j", mods = "CTRL", action = wez.action({ ActivatePaneDirection = "Down" }) },
+	{ key = "k", mods = "CTRL", action = wez.action({ ActivatePaneDirection = "Up" }) },
 	{ key = "l", mods = "LEADER", action = wez.action({ ActivatePaneDirection = "Right" }) },
 	{ key = "H", mods = "LEADER|SHIFT", action = wez.action({ AdjustPaneSize = { "Left", 6 } }) },
 	{ key = "J", mods = "LEADER|SHIFT", action = wez.action({ AdjustPaneSize = { "Down", 5 } }) },

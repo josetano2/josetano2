@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "coc-blade": ">=0.18.11",
+    "coc-html": ">=1.8.0",
+    "coc-snippets": ">=3.1.10"
+  }
+}
