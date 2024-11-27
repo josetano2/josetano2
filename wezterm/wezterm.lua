@@ -9,12 +9,11 @@ config.default_prog = { "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powersh
 config.window_decorations = "RESIZE" -- "TITLE", "TITLE | RESIZE", "NONE"
 config.debug_key_events = false
 config.adjust_window_size_when_changing_font_size = false
-config.animation_fps = 24
-config.max_fps = 30
+config.animation_fps = 60
+config.max_fps = 240
 config.scrollback_lines = 2000
 
 -- Font Options
--- config.font = wez.font("MesloLGS Nerd Font Mono")
 config.font_size = 12
 
 -- Color options
@@ -40,7 +39,7 @@ config.colors = {
 
 -- Dimmer for background
 local dimmer = {
-	brightness = 0.05,
+	brightness = 0.1,
 	saturation = 1.25,
 }
 

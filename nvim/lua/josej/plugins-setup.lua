@@ -82,6 +82,9 @@ return packer.startup(function(use)
 	-- lspkind for icons
 	use("onsails/lspkind-nvim")
 
+	-- snippet
+	use("rafamadriz/friendly-snippets")
+
 	-- managing & installing lsp servers, linters & formatters
 	use("williamboman/mason.nvim") -- in charge of managing lsp servers, linters & formatters
 	use("williamboman/mason-lspconfig.nvim") -- bridges gap b/w mason & lspconfig
@@ -145,7 +148,6 @@ return packer.startup(function(use)
 		end,
 	})
 
-	use({ "neoclide/coc.nvim", branch = "release" })
 	use("L3MON4D3/LuaSnip") -- snippet engine
 	use("saadparwaiz1/cmp_luasnip") -- for autocompletion
 

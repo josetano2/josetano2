@@ -87,3 +87,8 @@ vim.api.nvim_set_hl(0, "TelescopeResultsNormal", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "TelescopePreviewNormal", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { bg = "NONE" })
+
+-- snippet
+local luasnip = require("luasnip")
+luasnip.filetype_extend("blade", { "html" })
+luasnip.filetype_extend("php", { "html" })
