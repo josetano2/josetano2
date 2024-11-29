@@ -3,8 +3,8 @@ vim.g.mapleader = " "
 local keymap = vim.keymap
 
 keymap.set("i", "jk", "<ESC>")
-keymap.set("n", "i", "a", { noremap = true, silent = true })
-keymap.set("n", "a", "i", { noremap = true, silent = true })
+-- keymap.set("n", "i", "a", { noremap = true, silent = true })
+-- keymap.set("n", "a", "i", { noremap = true, silent = true })
 
 keymap.set("n", "<leader>nh", ":nohl<CR>")
 keymap.set("n", "<leader>ca", ":%y<CR>") -- yank all lines in buffer, cursor stays the same

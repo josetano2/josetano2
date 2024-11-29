@@ -5,7 +5,7 @@ local config = wez.config_builder()
 -- General Options
 
 -- config.enable_tab_bar = false
-config.default_prog = { "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" }
+config.default_prog = { "/bin/zsh", "-l" }
 config.window_decorations = "RESIZE" -- "TITLE", "TITLE | RESIZE", "NONE"
 config.debug_key_events = false
 config.adjust_window_size_when_changing_font_size = false
@@ -14,16 +14,18 @@ config.max_fps = 240
 config.scrollback_lines = 2000
 
 -- Font Options
-config.font_size = 12
+config.font_size = 16
+config.font = wez.font("GeistMono Nerd Font")
+config.default_cursor_style = "SteadyBar"
 
 -- Color options
 
 config.colors = {
-	foreground = "#dcd7ba",
+	foreground = "#d1d1d1",
 	background = "#1f1f28",
 
 	cursor_bg = "#c8c093",
-	cursor_fg = "#c8c093",
+	cursor_fg = "#000000",
 	cursor_border = "#c8c093",
 
 	selection_fg = "#c8c093",
@@ -35,19 +37,42 @@ config.colors = {
 	ansi = { "#090618", "#c34043", "#76946a", "#c0a36e", "#7e9cd8", "#957fb8", "#6a9589", "#c8c093" },
 	brights = { "#727169", "#e82424", "#98bb6c", "#e6c384", "#7fb4ca", "#938aa9", "#7aa89f", "#dcd7ba" },
 	indexed = { [16] = "#ffa066", [17] = "#ff5d62" },
+	tab_bar = {
+		background = "None",
+		active_tab = {
+			bg_color = "None",
+			fg_color = "#E5C07B",
+		},
+		inactive_tab = {
+			bg_color = "None",
+			fg_color = "#65737E",
+		},
+		inactive_tab_hover = {
+			bg_color = "None",
+			fg_color = "#65737E",
+		},
+		new_tab = {
+			bg_color = "None",
+			fg_color = "#65737E",
+		},
+		new_tab_hover = {
+			bg_color = "None",
+			fg_color = "#E5C07B",
+		},
+	},
 }
 
 -- Dimmer for background
 local dimmer = {
-	brightness = 0.1,
-	saturation = 1.25,
+	brightness = 0.05,
+	saturation = 1,
 }
 
 -- Define the two background options (wallpaper and transparent)
 local background_with_wallpaper = {
 	{
 		source = {
-			File = wez.config_dir .. "/backgrounds/chisato.png",
+			File = wez.config_dir .. "/backgrounds/mika.png",
 		},
 		width = "Cover",
 		height = "Cover",
@@ -105,8 +130,60 @@ config.keys = {
 config.window_padding = {
 	left = 40,
 	right = 40,
-	top = 40,
+	top = 20,
 	bottom = 20,
 }
+
+config.window_frame = {
+	border_top_height = 20,
+}
+
+config.tab_max_width = 32
+config.use_fancy_tab_bar = false
+config.show_new_tab_button_in_tab_bar = false
+local function tab_title(tab_info)
+	local title = tab_info.tab_title
+	-- if the tab title is explicitly set, take that
+	if title and #title > 0 then
+		return title
+	end
+	-- Otherwise, use the title from the active pane
+	-- in that tab
+	return tab_info.active_pane.title
+end
+
+wez.on("format-tab-title", function(tab, tabs, panes, conf, hover, max_width)
+	local background = "#749cdc"
+	local foreground = "#F0F2F5"
+	local edge_background = "#383434"
+
+	if tab.is_active or hover then
+		background = "#deadec"
+		foreground = "#F0F2F5"
+	end
+	local edge_foreground = background
+
+	local title = tab_title(tab)
+
+	-- ensure that the titles fit in the available space,
+	-- and that we have room for the edges.
+	local max = config.tab_max_width - 9
+	if #title > max then
+		title = wez.truncate_right(title, max) .. "…"
+	end
+
+	return {
+		{ Background = { Color = edge_background } },
+		{ Foreground = { Color = edge_foreground } },
+		{ Text = " " },
+		{ Background = { Color = background } },
+		{ Foreground = { Color = foreground } },
+		{ Attribute = { Intensity = tab.is_active and "Bold" or "Normal" } },
+		{ Text = " " .. (tab.tab_index + 1) .. ": " .. title .. " " },
+		{ Background = { Color = edge_background } },
+		{ Foreground = { Color = edge_foreground } },
+		{ Text = "" },
+	}
+end)
 
 return config

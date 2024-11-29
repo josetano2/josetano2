@@ -25,7 +25,7 @@ mason_lspconfig.setup({
 		"jdtls",
 		"pyright",
 		"intelephense",
-		"gopls",
+		-- "gopls",
 		"ts_ls",
 		"html",
 		"cssls",

@@ -130,20 +130,20 @@ lspconfig["intelephense"].setup({
 	},
 })
 
-lspconfig["gopls"].setup({
-	on_attach = on_attach,
-	capabilities = capabilities,
-	filetypes = { "go", "gomod", "gowork", "gotmpl" },
-	settings = {
-		gopls = {
-			completeUnimported = true,
-			usePlaceholders = true,
-			analyses = {
-				unusedparams = true,
-			},
-		},
-	},
-})
+-- lspconfig["gopls"].setup({
+-- 	on_attach = on_attach,
+-- 	capabilities = capabilities,
+-- 	filetypes = { "go", "gomod", "gowork", "gotmpl" },
+-- 	settings = {
+-- 		gopls = {
+-- 			completeUnimported = true,
+-- 			usePlaceholders = true,
+-- 			analyses = {
+-- 				unusedparams = true,
+-- 			},
+-- 		},
+-- 	},
+-- })
 
 -- lspconfig["jdtls"].setup({
 -- 	capabilities = capabilities,

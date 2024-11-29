@@ -66,7 +66,7 @@ return packer.startup(function(use)
 	})
 
 	-- theme
-	use("rebelot/kanagawa.nvim")
+	use("marko-cerovac/material.nvim")
 
 	-- fuzzy finding
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- better sorting performance
@@ -135,7 +135,7 @@ return packer.startup(function(use)
 	use("lewis6991/gitsigns.nvim") -- show line modifications on left hand side
 
 	-- transparent background
-	use("xiyaowong/transparent.nvim")
+	-- use("xiyaowong/transparent.nvim")
 
 	-- markdown
 	use({

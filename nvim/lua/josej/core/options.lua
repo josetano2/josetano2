@@ -1,7 +1,7 @@
 local opt = vim.opt
 
 -- line
-opt.relativenumber = true
+opt.relativenumber = false
 opt.number = true
 
 -- indentation
@@ -9,6 +9,8 @@ opt.tabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = true
 opt.autoindent = true
+
+opt.cursorline = true
 
 -- line wrap
 opt.wrap = false
@@ -50,7 +52,7 @@ opt.splitright = true
 opt.splitbelow = true
 
 -- no hl
-opt.hlsearch = false
+-- opt.hlsearch = false
 
 opt.iskeyword:append("-")
 
@@ -87,8 +89,3 @@ vim.api.nvim_set_hl(0, "TelescopeResultsNormal", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "TelescopePreviewNormal", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { bg = "NONE" })
-
--- snippet
-local luasnip = require("luasnip")
-luasnip.filetype_extend("blade", { "html" })
-luasnip.filetype_extend("php", { "html" })
