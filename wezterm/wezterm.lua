@@ -131,7 +131,7 @@ config.window_padding = {
 	left = 40,
 	right = 40,
 	top = 20,
-	bottom = 20,
+	bottom = 0,
 }
 
 config.window_frame = {
