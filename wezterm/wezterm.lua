@@ -9,7 +9,7 @@ config.default_prog = { "/bin/zsh", "-l" }
 config.window_decorations = "RESIZE" -- "TITLE", "TITLE | RESIZE", "NONE"
 config.debug_key_events = false
 config.adjust_window_size_when_changing_font_size = false
-config.animation_fps = 60
+config.animation_fps = 120
 config.max_fps = 240
 config.scrollback_lines = 2000
 
@@ -62,9 +62,11 @@ config.colors = {
 	},
 }
 
+
+
 -- Dimmer for background
 local dimmer = {
-	brightness = 0.05,
+	brightness = 0.1,
 	saturation = 1,
 }
 
@@ -72,7 +74,7 @@ local dimmer = {
 local background_with_wallpaper = {
 	{
 		source = {
-			File = wez.config_dir .. "/backgrounds/mika.png",
+			File = wez.config_dir .. "/backgrounds/subaru.jpg",
 		},
 		width = "Cover",
 		height = "Cover",
@@ -82,11 +84,11 @@ local background_with_wallpaper = {
 		repeat_y = "NoRepeat",
 		opacity = 1,
 		hsb = dimmer,
-	},
+	},	
 }
 
 -- Initialize with the wallpaper by default
-config.background = background_with_wallpaper
+-- config.background = background_with_wallpaper
 
 -- Leader
 config.leader = { key = "a", mods = "CTRL" }
@@ -151,6 +153,7 @@ local function tab_title(tab_info)
 	-- in that tab
 	return tab_info.active_pane.title
 end
+config.inactive_pane_hsb = { saturation = 0.9, brightness = 0.6 }
 
 wez.on("format-tab-title", function(tab, tabs, panes, conf, hover, max_width)
 	local background = "#749cdc"
