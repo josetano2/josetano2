@@ -1,0 +1,221 @@
+# ──────────────────────────────────────────────────────────────────────
+#  錦  NISHIKI — the ink prompt, printed in full colour
+#
+#   repo/path ━━━╾─╴ branch hash +1 !2 ?3 +40 -7      ✗1  4s  mem  batt  time
+#  [ミカ] ❯                                              node  python  pkg
+#
+#  Line 1 left   where you are and the state of git
+#  Line 1 right  the last command, then the machine
+#  Line 2 right  the project's toolchain (hides itself as you type)
+#
+#  Needs a Nerd Font (GeistMono Nerd Font is already set in WezTerm).
+#  Previous theme (ink, monochrome): starship.toml.backup-2026-11-13-sumi
+# ──────────────────────────────────────────────────────────────────────
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+palette = "nishiki"
+add_newline = true
+continuation_prompt = '[       ┆ ](haze)'
+
+# To change the seal, edit ミカ on the last line of this block.
+format = """
+$hostname\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$git_metrics\
+$fill\
+$status\
+$cmd_duration\
+$jobs\
+$memory_usage\
+$battery\
+$time\
+$line_break\
+[▐](fg:seal)[ミカ](bg:seal fg:paper bold)[▌](fg:seal) $character"""
+
+# Shown at the far right of the line you type on.
+right_format = """
+$nodejs\
+$python\
+$rust\
+$golang\
+$java\
+$c\
+$lua\
+$dart\
+$package\
+$docker_context"""
+
+# ── Palette (Kanagawa pigments) ───────────────────────────────────────
+[palettes.nishiki]
+paper  = "#dcd7ba"
+ash    = "#8a8980"
+haze   = "#727169"
+mist   = "#9cabca"
+seal   = "#c34043" # the hanko
+peach  = "#ff5d62" # red
+surimi = "#ffa066" # orange
+carp   = "#e6c384" # yellow
+spring = "#98bb6c" # green
+aqua   = "#7aa89f"
+sky    = "#7fb4ca" # light blue
+wave   = "#7e9cd8" # blue
+oni    = "#957fb8" # violet
+sakura = "#d27e99" # pink
+
+# ── Line 2 ────────────────────────────────────────────────────────────
+[character]
+success_symbol = '[❯](bold spring)'
+error_symbol = '[❯](bold peach)'
+vimcmd_symbol = '[❮](bold oni)'
+vimcmd_visual_symbol = '[❮](bold carp)'
+vimcmd_replace_symbol = '[❮](bold sakura)'
+vimcmd_replace_one_symbol = '[❮](bold sakura)'
+
+# ── Line 1, left: place and git ───────────────────────────────────────
+[fill]
+symbol = " "
+
+# Only appears over SSH.
+[hostname]
+ssh_only = true
+format = ' [@$hostname](bold surimi)'
+
+# Inside a git repo the repo name is bold and subfolders are lighter.
+[directory]
+truncation_length = 4
+truncation_symbol = "…/"
+style = "bold sky"
+read_only = " "
+read_only_style = "fg:peach"
+repo_root_style = "bold sky"
+format = ' [$path]($style)[$read_only]($read_only_style)'
+repo_root_format = ' [$repo_root]($repo_root_style)[$path](fg:mist)[$read_only]($read_only_style)'
+
+# The brush stroke: starts in the path's blue, thins out into the
+# branch's pink.
+[git_branch]
+format = ' [━━](fg:sky)[━](fg:wave)[╾](fg:oni)[─](fg:sakura)[╴](fg:sakura) [ $branch](fg:sakura)'
+
+# Short hash of the commit you are on, plus its tag if it has one.
+[git_commit]
+only_detached = false
+tag_disabled = false
+commit_hash_length = 7
+tag_symbol = "  "
+format = ' [ $hash$tag](fg:ash)'
+
+[git_state]
+format = ' [$state( $progress_current/$progress_total)](bold surimi)'
+
+# File counts: + staged, ! modified, ? untracked, ✘ deleted,
+# * stashed, ⇡⇣ ahead/behind the remote.
+[git_status]
+format = '[$conflicted$deleted](fg:peach)[$staged$renamed](fg:spring)[$modified$typechanged](fg:carp)[$untracked](fg:wave)[$stashed](fg:oni)[$ahead_behind](fg:aqua)'
+conflicted = ' =${count}'
+deleted = ' ✘${count}'
+staged = ' +${count}'
+renamed = ' »${count}'
+modified = ' !${count}'
+typechanged = ' ~${count}'
+untracked = ' ?${count}'
+stashed = ' *${count}'
+ahead = ' ⇡${count}'
+behind = ' ⇣${count}'
+diverged = ' ⇡${ahead_count}⇣${behind_count}'
+up_to_date = ''
+
+# Lines added / removed that are not committed yet (after the diff icon).
+[git_metrics]
+disabled = false
+format = '( [](fg:ash)( [+$added](fg:spring))( [-$deleted](fg:peach)))'
+
+# ── Line 1, right: last command, then the machine ─────────────────────
+# Exit code of the last command, only when it failed.
+[status]
+disabled = false
+format = ' [✗$status( $signal_name)](bold peach)'
+
+# How long the last command took, if 2s or more.
+[cmd_duration]
+min_time = 2000
+format = ' [ $duration](fg:carp)'
+
+[jobs]
+symbol = " "
+style = "fg:wave"
+format = ' [$symbol$number]($style)'
+
+# RAM in use, once it passes 70%.
+[memory_usage]
+disabled = false
+threshold = 70
+format = ' [󰍛 $ram_pct](fg:oni)'
+
+# Always shown; green, then yellow under 40%, red under 15%.
+[battery]
+format = ' [$symbol$percentage]($style)'
+
+[[battery.display]]
+threshold = 15
+style = "bold peach"
+
+[[battery.display]]
+threshold = 40
+style = "fg:carp"
+
+[[battery.display]]
+threshold = 100
+style = "fg:spring"
+
+[time]
+disabled = false
+time_format = "%R"
+format = ' [ $time](fg:mist) '
+
+# ── Line 2, right: the project's toolchain ────────────────────────────
+# Each one appears only in a project that uses it, and only if the tool
+# is actually installed.
+[nodejs]
+version_format = "${raw}"
+format = '( [ $version](fg:spring))'
+
+[python]
+version_format = "${raw}"
+format = '( [ $version( \($virtualenv\))](fg:carp))'
+
+[rust]
+version_format = "${raw}"
+format = '( [ $version](fg:surimi))'
+
+[golang]
+version_format = "${raw}"
+format = '( [ $version](fg:aqua))'
+
+[java]
+version_format = "${raw}"
+format = '( [ $version](fg:peach))'
+
+[c]
+version_format = "${raw}"
+format = '( [ $version](fg:wave))'
+
+[lua]
+version_format = "${raw}"
+format = '( [ $version](fg:wave))'
+
+[dart]
+version_format = "${raw}"
+format = '( [ $version](fg:sky))'
+
+# Version from package.json, Cargo.toml, pyproject.toml, pubspec.yaml…
+[package]
+version_format = "${raw}"
+format = '( [󰏗 $version](fg:sakura))'
+
+[docker_context]
+format = '( [ $context](fg:sky))'

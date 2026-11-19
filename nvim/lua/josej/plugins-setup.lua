@@ -134,6 +134,14 @@ return packer.startup(function(use)
 
 	-- git integration
 	use("lewis6991/gitsigns.nvim") -- show line modifications on left hand side
+	use({ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" }) -- vscode-like diff view of all changed files
+	use({
+		"NeogitOrg/neogit", -- vscode-like source control panel: stage, commit, git graph
+		requires = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim" },
+		config = function()
+			require("neogit").setup({ graph_style = "unicode" })
+		end,
+	})
 
 	-- transparent background
 	-- use("xiyaowong/transparent.nvim")

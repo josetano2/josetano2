@@ -1,0 +1,127 @@
+# ──────────────────────────────────────────────────────────────────────
+#  墨  SUMI — an ink-wash prompt with a hanko seal
+#
+#   repo/path ━━━╾─╴ branch +1 !2 ?3                        ✗1  4s  16:16
+#  [ミカ] ❯
+#
+#  Almost everything is ink: paper white, ash, smoke. The one loud thing
+#  is the red seal beside the cursor, the way a print is signed.
+#  Git counts get a faint pigment wash so they stay readable.
+#
+#  Needs a Nerd Font (GeistMono Nerd Font is already set in WezTerm).
+#  Previous theme (capsules): starship.toml.backup-2026-11-12-nami
+# ──────────────────────────────────────────────────────────────────────
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+palette = "sumi"
+add_newline = true
+continuation_prompt = '[       ┆ ](smoke)'
+
+# Line 1: where you are · brush stroke · git ········ last command · time
+# Line 2: the seal, then the cursor.
+# To change the seal, edit ミカ on the last line of this block.
+format = """
+$hostname\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$python\
+$fill\
+$status\
+$cmd_duration\
+$jobs\
+$time\
+$line_break\
+[▐](fg:seal)[ミカ](bg:seal fg:paper bold)[▌](fg:seal) $character"""
+
+# ── Palette (Kanagawa inks and pigments) ──────────────────────────────
+[palettes.sumi]
+paper  = "#dcd7ba" # brightest ink — what matters most
+ink    = "#c8c093"
+ash    = "#8a8980"
+haze   = "#727169" # the clock
+smoke  = "#54546d"
+shadow = "#363646"
+seal   = "#c34043" # the hanko
+blood  = "#ff5d62" # failures
+moss   = "#76946a" # staged
+ochre  = "#dca561" # modified
+indigo = "#7e9cd8" # ahead / behind
+
+# ── Line 2 ────────────────────────────────────────────────────────────
+[character]
+success_symbol = '[❯](bold paper)'
+error_symbol = '[❯](bold blood)'
+vimcmd_symbol = '[❮](bold indigo)'
+vimcmd_visual_symbol = '[❮](bold ochre)'
+vimcmd_replace_symbol = '[❮](bold moss)'
+vimcmd_replace_one_symbol = '[❮](bold moss)'
+
+# ── Line 1, left ──────────────────────────────────────────────────────
+[fill]
+symbol = " "
+
+# Only appears over SSH.
+[hostname]
+ssh_only = true
+format = ' [@$hostname](fg:ochre)'
+
+# Inside a git repo the repo name is bold and the rest is lighter ink.
+[directory]
+truncation_length = 4
+truncation_symbol = "…/"
+style = "fg:paper bold"
+read_only = " "
+read_only_style = "fg:seal"
+repo_root_style = "fg:paper bold"
+format = ' [$path]($style)[$read_only]($read_only_style)'
+repo_root_format = ' [$repo_root]($repo_root_style)[$path](fg:ink)[$read_only]($read_only_style)'
+
+# The brush stroke: heavy where it lands, trailing off toward the branch.
+[git_branch]
+format = ' [━━━](fg:paper)[╾](fg:ash)[─](fg:smoke)[╴](fg:shadow) [$branch](fg:ink)'
+
+[git_state]
+format = ' [$state( $progress_current/$progress_total)](fg:ochre bold)'
+
+[git_status]
+format = '[$conflicted$deleted](fg:blood)[$staged$renamed](fg:moss)[$modified$typechanged](fg:ochre)[$untracked$stashed](fg:ash)[$ahead_behind](fg:indigo)'
+conflicted = ' =${count}'
+deleted = ' ✘${count}'
+staged = ' +${count}'
+renamed = ' »${count}'
+modified = ' !${count}'
+typechanged = ' ~${count}'
+untracked = ' ?${count}'
+stashed = ' *${count}'
+ahead = ' ⇡${count}'
+behind = ' ⇣${count}'
+diverged = ' ⇡${ahead_count}⇣${behind_count}'
+up_to_date = ''
+
+# Only speaks up when a virtualenv is active.
+[python]
+format = '( [\($virtualenv\)](fg:ash))'
+
+# ── Line 1, right ─────────────────────────────────────────────────────
+# Exit code of the last command, only when it failed.
+[status]
+disabled = false
+format = ' [✗$status( $signal_name)](fg:blood)'
+
+# How long the last command took, if 2s or more.
+[cmd_duration]
+min_time = 2000
+format = ' [$duration](fg:ochre)'
+
+[jobs]
+symbol = "✦"
+style = "fg:indigo"
+format = ' [$symbol$number]($style)'
+
+[time]
+disabled = false
+time_format = "%R"
+format = ' [$time](fg:haze) '

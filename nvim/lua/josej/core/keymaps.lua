@@ -30,6 +30,15 @@ keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>")
 -- nvim tree
 keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>") -- CHANGED
 
+-- diffview
+keymap.set("n", "<leader>gd", ":DiffviewOpen<CR>") -- all uncommitted changes
+keymap.set("n", "<leader>gh", ":DiffviewFileHistory %<CR>") -- history of current file
+keymap.set("n", "<leader>gq", ":DiffviewClose<CR>")
+
+-- neogit
+keymap.set("n", "<leader>gg", ":Neogit<CR>") -- source control panel (stage, commit, push)
+keymap.set("n", "<leader>gl", ":Neogit log<CR>") -- git graph
+
 -- telescope
 
 keymap.set("n", "<leader>u", "<cmd>Telescope live_grep<cr>") -- find files within current working directory, respects .gitignore

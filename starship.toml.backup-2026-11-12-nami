@@ -1,0 +1,190 @@
+# ──────────────────────────────────────────────────────────────────────
+#  波  NAMI — a Kanagawa capsule prompt
+#
+#  ╭─ (ミカ ~/path) (branch +1 !2 ?3) lang ─────────────── took  (time)
+#  ╰─❯
+#
+#  Colours match the Kanagawa palette in wezterm/wezterm.lua.
+#  Needs a Nerd Font (GeistMono Nerd Font is already set in WezTerm).
+#  Previous config: starship.toml.backup-2026-11-11
+# ──────────────────────────────────────────────────────────────────────
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+palette = "kanagawa"
+add_newline = true
+continuation_prompt = '[┆ ](rail)'
+
+# Line 1: frame · badge+directory · git · toolchains · rail · status · time
+# Line 2: frame · prompt character
+# The badge (ミカ) lives right here — change the text between the brackets.
+format = """
+[╭─](rail)\
+$hostname\
+[ ](fg:oni)[ミカ ](bg:oni fg:ink bold)\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$nodejs\
+$python\
+$rust\
+$golang\
+$java\
+$c\
+$lua\
+$dart\
+$docker_context\
+[ ](rail)$fill\
+$status\
+$cmd_duration\
+$jobs\
+$time\
+$line_break\
+[╰─](rail)$character"""
+
+# ── Palette ───────────────────────────────────────────────────────────
+[palettes.kanagawa]
+ink     = "#16161d" # text on coloured chips
+surface = "#2a2a37" # capsule body
+rail    = "#54546d" # frame + connecting line
+text    = "#dcd7ba"
+muted   = "#727169"
+mist    = "#9cabca"
+wave    = "#7e9cd8" # blue
+aqua    = "#7aa89f"
+spring  = "#98bb6c" # green
+carp    = "#e6c384" # yellow
+surimi  = "#ffa066" # orange
+sakura  = "#d27e99" # pink
+peach   = "#ff5d62" # red
+oni     = "#957fb8" # violet
+
+# ── Frame ─────────────────────────────────────────────────────────────
+[fill]
+symbol = "─"
+style = "rail"
+
+[character]
+success_symbol = '[❯](bold spring)'
+error_symbol = '[❯](bold peach)'
+vimcmd_symbol = '[❮](bold oni)'
+vimcmd_visual_symbol = '[❮](bold carp)'
+vimcmd_replace_symbol = '[❮](bold sakura)'
+vimcmd_replace_one_symbol = '[❮](bold sakura)'
+
+# ── Left side ─────────────────────────────────────────────────────────
+# Only appears over SSH.
+[hostname]
+ssh_only = true
+format = ' [](fg:surimi)[@$hostname](bg:surimi fg:ink bold)[](fg:surimi)'
+
+# Body of the first capsule (the badge in `format` above is its head).
+# Inside a git repo the repo root is highlighted.
+[directory]
+truncation_length = 3
+truncation_symbol = "…/"
+style = "bg:surface fg:text"
+read_only = " "
+read_only_style = "bg:surface fg:peach"
+repo_root_style = "bg:surface fg:carp bold"
+format = '[ $path ]($style)[$read_only]($read_only_style)[](fg:surface)'
+repo_root_format = '[ ](bg:surface)[$repo_root]($repo_root_style)[$path ]($style)[$read_only]($read_only_style)[](fg:surface)'
+
+# Git capsule = git_branch (head) + git_state + git_status (tail, closes it).
+[git_branch]
+format = ' [](fg:sakura)[ ](bg:sakura fg:ink)[ $branch](bg:surface fg:text)'
+
+[git_state]
+format = '[ $state( $progress_current/$progress_total)](bg:surface fg:surimi bold)'
+
+[git_status]
+format = '[$conflicted$deleted](bg:surface fg:peach)[$staged$renamed](bg:surface fg:spring)[$modified$typechanged](bg:surface fg:carp)[$untracked](bg:surface fg:wave)[$stashed](bg:surface fg:oni)[$ahead_behind](bg:surface fg:aqua)[ ](bg:surface)[](fg:surface)'
+conflicted = ' =${count}'
+deleted = ' ✘${count}'
+staged = ' +${count}'
+renamed = ' »${count}'
+modified = ' !${count}'
+typechanged = ' ~${count}'
+untracked = ' ?${count}'
+stashed = ' *${count}'
+ahead = ' ⇡${count}'
+behind = ' ⇣${count}'
+diverged = ' ⇡${ahead_count}⇣${behind_count}'
+up_to_date = ''
+
+# Toolchains: quiet coloured text sitting on the rail, shown only in
+# projects that use them.
+[nodejs]
+symbol = " "
+style = "fg:spring"
+version_format = "${raw}"
+format = ' [$symbol($version)]($style)'
+
+[python]
+symbol = " "
+style = "fg:carp"
+version_format = "${raw}"
+format = ' [$symbol($version)( \($virtualenv\))]($style)'
+
+[rust]
+symbol = " "
+style = "fg:surimi"
+version_format = "${raw}"
+format = ' [$symbol($version)]($style)'
+
+[golang]
+symbol = " "
+style = "fg:aqua"
+version_format = "${raw}"
+format = ' [$symbol($version)]($style)'
+
+[java]
+symbol = " "
+style = "fg:peach"
+version_format = "${raw}"
+format = ' [$symbol($version)]($style)'
+
+[c]
+symbol = " "
+style = "fg:wave"
+version_format = "${raw}"
+format = ' [$symbol($version)]($style)'
+
+[lua]
+symbol = " "
+style = "fg:wave"
+version_format = "${raw}"
+format = ' [$symbol($version)]($style)'
+
+[dart]
+symbol = " "
+style = "fg:aqua"
+version_format = "${raw}"
+format = ' [$symbol($version)]($style)'
+
+[docker_context]
+symbol = " "
+style = "fg:wave"
+format = ' [$symbol$context]($style)'
+
+# ── Right side ────────────────────────────────────────────────────────
+# Exit code of the last command, only when it failed.
+[status]
+disabled = false
+format = ' [ $status( $signal_name)](bold peach)'
+
+# How long the last command took, if 2s or more.
+[cmd_duration]
+min_time = 2000
+format = ' [ $duration](fg:carp)'
+
+[jobs]
+symbol = " "
+style = "fg:wave"
+format = ' [$symbol$number]($style)'
+
+[time]
+disabled = false
+time_format = "%R"
+format = ' [](fg:surface)[ $time](bg:surface fg:mist)[](fg:surface)'

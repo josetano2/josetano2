@@ -1,152 +1,243 @@
+# ──────────────────────────────────────────────────────────────────────
+#  折  ORIGAMI — a mood-ring prompt
+#
+#  ● shop-api/src  ▲ main #b171575  +1 !1 ?1 ↑1  ∆ +4 −1     took 4s  10:30
+#  (ミカ) ›                                         node 20.20.2  pkg 1.4.0
+#
+#  The ミカ sticker is the status light: mint when the last command
+#  worked, cherry when it failed, sky/lilac/orange in vim modes.
+#
+#  Two kinds of mark keep it quiet:
+#    shapes  ● where you are, ▲ which branch
+#    words   lowercase labels in grey, values in colour (took, mem, node…)
+#  Everything on the right shows up only when it has something to say.
+#
+#  Layout borrows from sindresorhus/pure (two lines, details on the right).
+#  Needs a Nerd Font (GeistMono Nerd Font is already set in WezTerm).
+#  Previous theme (colourful ink): starship.toml.backup-2026-11-16-nishiki
+# ──────────────────────────────────────────────────────────────────────
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+palette = "origami"
+add_newline = true
+continuation_prompt = '[ ·· ](fog)'
+
 format = """
-[](#9A348E)\
-$os\
-$username\
-[](bg:#DA627D fg:#9A348E)\
+$hostname\
 $directory\
-[](fg:#DA627D bg:#FCA17D)\
 $git_branch\
+$git_commit\
+$git_state\
 $git_status\
-[](fg:#FCA17D bg:#86BBD8)\
-$c\
-$elixir\
-$elm\
-$golang\
-$gradle\
-$haskell\
-$java\
-$julia\
-$nodejs\
-$nim\
-$rust\
-$scala\
-[](fg:#86BBD8 bg:#06969A)\
-$docker_context\
-[](fg:#06969A bg:#33658A)\
+$git_metrics\
+$fill\
+$status\
+$cmd_duration\
+$jobs\
+$memory_usage\
+$battery\
 $time\
-[](fg:#33658A)\
-$line_break$character"""
+$line_break\
+$character"""
 
+# Far right of the line you type on: the project's toolchain.
+right_format = """
+$python\
+$nodejs\
+$bun\
+$deno\
+$rust\
+$golang\
+$java\
+$kotlin\
+$c\
+$lua\
+$dart\
+$package\
+$docker_context"""
 
-# You can also replace your username with a neat symbol like   or disable this
-# and use the os module below
-[username]
-show_always = true
-style_user = "bg:#9A348E"
-style_root = "bg:#9A348E"
-format = '[ミカ]($style)'
-disabled = false
+# ── Palette ───────────────────────────────────────────────────────────
+[palettes.origami]
+ink    = "#1f1f28" # same as the terminal background, for cut-out text
+fog    = "#5d5b74" # labels
+mute   = "#9d9bb8" # the clock
+pink   = "#ff7eb6"
+orange = "#ffa66b"
+lemon  = "#ffd970"
+mint   = "#6ee7b7"
+sky    = "#7cc4ff"
+lilac  = "#b8a1ff"
+cherry = "#ff5c7a"
 
+# ── Line 2: the sticker ───────────────────────────────────────────────
 [character]
-disabled = false
-success_symbol = '[](bold fg:color_green)'
-error_symbol = '[](bold fg:color_red)'
-vimcmd_symbol = '[](bold fg:color_green)'
-vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
-vimcmd_replace_symbol = '[](bold fg:color_purple)'
-vimcmd_visual_symbol = '[](bold fg:color_yellow)'
+format = '$symbol '
+success_symbol = '[](fg:mint)[ミカ](bold bg:mint fg:ink)[](fg:mint) [›](bold mint)'
+error_symbol = '[](fg:cherry)[ミカ](bold bg:cherry fg:ink)[](fg:cherry) [›](bold cherry)'
+vimcmd_symbol = '[](fg:sky)[ミカ](bold bg:sky fg:ink)[](fg:sky) [‹](bold sky)'
+vimcmd_visual_symbol = '[](fg:lilac)[ミカ](bold bg:lilac fg:ink)[](fg:lilac) [‹](bold lilac)'
+vimcmd_replace_symbol = '[](fg:orange)[ミカ](bold bg:orange fg:ink)[](fg:orange) [‹](bold orange)'
+vimcmd_replace_one_symbol = '[](fg:orange)[ミカ](bold bg:orange fg:ink)[](fg:orange) [‹](bold orange)'
 
-# An alternative to the username module which displays a symbol that
-# represents the current operating system
-[os]
-style = "bg:#9A348E"
-disabled = true # Disabled by default
+# ── Line 1, left: shapes ──────────────────────────────────────────────
+[fill]
+symbol = " "
 
+# Only appears over SSH.
+[hostname]
+ssh_only = true
+format = '[▲ $hostname](bold orange)  '
+
+# ● where you are. In a repo the repo name is bold.
 [directory]
-style = "bg:#DA627D"
-format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
+style = "fg:sky"
+read_only = " "
+read_only_style = "fg:cherry"
+repo_root_style = "bold sky"
+format = '[●](pink) [$path]($style)[$read_only]($read_only_style)'
+repo_root_format = '[●](pink) [$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style)'
 
-# Here is how you can shorten some long paths by text replacement
-# similar to mapped_locations in Oh My Posh:
-[directory.substitutions]
-"Documents" = "󰈙 "
-"Downloads" = " "
-"Music" = " "
-"Pictures" = " "
-# Keep in mind that the order matters. For example:
-# "Important Documents" = " 󰈙 "
-# will not be replaced, because "Documents" was already substituted before.
-# So either put "Important Documents" before "Documents" or use the substituted version:
-# "Important 󰈙 " = " 󰈙 "
-
-[c]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[docker_context]
-symbol = " "
-style = "bg:#06969A"
-format = '[ $symbol $context ]($style)'
-
-[elixir]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[elm]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
+# ▲ which branch, then the commit it is on.
 [git_branch]
-symbol = ""
-style = "bg:#FCA17D"
-format = '[ $symbol $branch ]($style)'
+format = '  [▲](lemon) [$branch](lilac)'
 
+[git_commit]
+only_detached = false
+tag_disabled = false
+commit_hash_length = 7
+tag_symbol = " "
+format = ' [#$hash](fog)[$tag](lemon)'
+
+[git_state]
+format = ' [$state( $progress_current/$progress_total)](bold orange)'
+
+# + staged  ! modified  ? untracked  × deleted  * stashed  ↑↓ vs remote
 [git_status]
-style = "bg:#FCA17D"
-format = '[$all_status$ahead_behind ]($style)'
+format = '( [$conflicted$deleted](cherry)[$staged$renamed](mint)[$modified$typechanged](orange)[$untracked](pink)[$stashed](lilac)[$ahead_behind](sky))'
+conflicted = ' =${count}'
+deleted = ' ×${count}'
+staged = ' +${count}'
+renamed = ' »${count}'
+modified = ' !${count}'
+typechanged = ' ~${count}'
+untracked = ' ?${count}'
+stashed = ' *${count}'
+ahead = ' ↑${count}'
+behind = ' ↓${count}'
+diverged = ' ↑${ahead_count}↓${behind_count}'
+up_to_date = ''
 
-[golang]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+# ∆ lines added / removed since the last commit.
+[git_metrics]
+disabled = false
+format = '(  [∆](fog)( [+$added](mint))( [−$deleted](cherry)))'
 
-[gradle]
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+# ── Line 1, right: words ──────────────────────────────────────────────
+# Exit code, only when the last command failed.
+[status]
+disabled = false
+format = '  [×$status( $signal_name)](bold cherry)'
 
-[haskell]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+# Only when the last command took 2s or more.
+[cmd_duration]
+min_time = 2000
+format = '  [took](fog) [$duration](lemon)'
 
-[java]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+# Background jobs (ctrl-z), only when there are any.
+[jobs]
+number_threshold = 1
+symbol_threshold = 1
+format = '  [jobs](fog) [$number](lilac)'
 
-[julia]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+# Only when RAM use passes 85% (macOS idles around 75%).
+[memory_usage]
+disabled = false
+threshold = 85
+format = '  [mem](fog) [$ram_pct](orange)'
 
-[nodejs]
-symbol = ""
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+# Only under 50%: a one-character level bar that drains as it goes.
+[battery]
+full_symbol = ""
+unknown_symbol = ""
+empty_symbol = "▁"
+format = '  [bat](fog) [$symbol $percentage]($style)'
 
-[nim]
-symbol = "󰆥 "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+[[battery.display]]
+threshold = 10
+style = "bold cherry"
+discharging_symbol = "▁"
+charging_symbol = "▁"
 
-[rust]
-symbol = ""
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+[[battery.display]]
+threshold = 25
+style = "fg:orange"
+discharging_symbol = "▂"
+charging_symbol = "▂"
 
-[scala]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+[[battery.display]]
+threshold = 50
+style = "fg:lemon"
+discharging_symbol = "▄"
+charging_symbol = "▄"
 
 [time]
 disabled = false
-time_format = "%R" # Hour:Minute Format
-style = "bg:#33658A"
-format = '[   $time ]($style)'
+time_format = "%R"
+format = '  [$time](mute) '
 
+# ── Line 2, right: toolchain ──────────────────────────────────────────
+# Each appears only in a project that uses it.
+[python]
+version_format = "${raw}"
+format = '  [py](fog) [$version](lemon)( [\($virtualenv\)](fog))'
+
+[nodejs]
+version_format = "${raw}"
+format = '  [node](fog) [$version](mint)'
+
+[bun]
+version_format = "${raw}"
+format = '  [bun](fog) [$version](pink)'
+
+[deno]
+version_format = "${raw}"
+format = '  [deno](fog) [$version](mint)'
+
+[rust]
+version_format = "${raw}"
+format = '  [rust](fog) [$version](orange)'
+
+[golang]
+version_format = "${raw}"
+format = '  [go](fog) [$version](sky)'
+
+[java]
+version_format = "${raw}"
+format = '  [java](fog) [$version](cherry)'
+
+[kotlin]
+version_format = "${raw}"
+format = '  [kt](fog) [$version](lilac)'
+
+[c]
+version_format = "${raw}"
+format = '  [c](fog) [$version](sky)'
+
+[lua]
+version_format = "${raw}"
+format = '  [lua](fog) [$version](lilac)'
+
+[dart]
+version_format = "${raw}"
+format = '  [dart](fog) [$version](sky)'
+
+# Version from package.json, Cargo.toml, pyproject.toml, pubspec.yaml…
+[package]
+version_format = "${raw}"
+format = '  [pkg](fog) [$version](pink)'
+
+[docker_context]
+format = '  [docker](fog) [$context](sky)'
