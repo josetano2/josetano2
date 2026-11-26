@@ -1,29 +1,36 @@
 # ──────────────────────────────────────────────────────────────────────
-#  折  ORIGAMI — a mood-ring prompt
+#  冒  BOUKEN — your shell as an RPG status window
 #
-#  ● shop-api/src  ▲ main #b171575  +1 !1 ?1 ↑1  ∆ +4 −1     took 4s  10:30
-#  (ミカ) ›                                         node 20.20.2  pkg 1.4.0
+#  ミカ Lv1  HP ━━━━╾ 90%    shop-api   main #5e3966a +1 !1 ?1 ↑1  xp +4 −1     cast 4s  10:43
+#  ▶                                                    node 20.20.2  pkg 1.4.0
 #
-#  The ミカ sticker is the status light: mint when the last command
-#  worked, cherry when it failed, sky/lilac/orange in vim modes.
+#  ミカ   the hero (edit the name in `format` below)
+#  Lv     shell depth: Lv2 inside nvim's terminal, a nested zsh, etc.
+#  HP     battery, a draining bar;  while charging
+#        where you are            your quest (git branch)
+#  xp     lines added / removed since the last commit
 #
-#  Two kinds of mark keep it quiet:
-#    shapes  ● where you are, ▲ which branch
-#    words   lowercase labels in grey, values in colour (took, mem, node…)
-#  Everything on the right shows up only when it has something to say.
+#  Status effects on the right, only when they happen:
+#    dmg 127      the last command failed (exit code)
+#    cast 4s      the last command took 2s or more
+#    party 2      background jobs tagging along (ctrl-z)
+#    heavy 88%    RAM over 85%
 #
-#  Layout borrows from sindresorhus/pure (two lines, details on the right).
+#  ▶ is the menu cursor: gold normally, red after a failure, ◀ in vim mode.
 #  Needs a Nerd Font (GeistMono Nerd Font is already set in WezTerm).
-#  Previous theme (colourful ink): starship.toml.backup-2026-11-16-nishiki
+#  Previous theme (Origami): starship.toml.backup-2026-11-25-origami
 # ──────────────────────────────────────────────────────────────────────
 
 "$schema" = 'https://starship.rs/config-schema.json'
 
-palette = "origami"
+palette = "bouken"
 add_newline = true
-continuation_prompt = '[ ·· ](fog)'
+continuation_prompt = '[▷ ](fog)'
 
 format = """
+[ミカ](bold gold)\
+$shlvl\
+$battery\
 $hostname\
 $directory\
 $git_branch\
@@ -36,12 +43,11 @@ $status\
 $cmd_duration\
 $jobs\
 $memory_usage\
-$battery\
 $time\
 $line_break\
 $character"""
 
-# Far right of the line you type on: the project's toolchain.
+# Far right of the line you type on: your equipment (toolchain).
 right_format = """
 $python\
 $nodejs\
@@ -57,39 +63,110 @@ $dart\
 $package\
 $docker_context"""
 
-# ── Palette ───────────────────────────────────────────────────────────
-[palettes.origami]
-ink    = "#1f1f28" # same as the terminal background, for cut-out text
-fog    = "#5d5b74" # labels
+[palettes.bouken]
+paper  = "#e8e6f3"
+fog    = "#c8c6dc" # labels — light so they read over the wallpaper
 mute   = "#9d9bb8" # the clock
-pink   = "#ff7eb6"
+gold   = "#ffd166" # the hero
+mint   = "#7ee787" # full HP, added lines, staged
+lemon  = "#ffe27a"
 orange = "#ffa66b"
-lemon  = "#ffd970"
-mint   = "#6ee7b7"
+cherry = "#ff5c7a" # damage
 sky    = "#7cc4ff"
 lilac  = "#b8a1ff"
-cherry = "#ff5c7a"
+pink   = "#ff7eb6"
 
-# ── Line 2: the sticker ───────────────────────────────────────────────
+# ── The cursor ────────────────────────────────────────────────────────
 [character]
-format = '$symbol '
-success_symbol = '[](fg:mint)[ミカ](bold bg:mint fg:ink)[](fg:mint) [›](bold mint)'
-error_symbol = '[](fg:cherry)[ミカ](bold bg:cherry fg:ink)[](fg:cherry) [›](bold cherry)'
-vimcmd_symbol = '[](fg:sky)[ミカ](bold bg:sky fg:ink)[](fg:sky) [‹](bold sky)'
-vimcmd_visual_symbol = '[](fg:lilac)[ミカ](bold bg:lilac fg:ink)[](fg:lilac) [‹](bold lilac)'
-vimcmd_replace_symbol = '[](fg:orange)[ミカ](bold bg:orange fg:ink)[](fg:orange) [‹](bold orange)'
-vimcmd_replace_one_symbol = '[](fg:orange)[ミカ](bold bg:orange fg:ink)[](fg:orange) [‹](bold orange)'
+success_symbol = '[▶](bold gold)'
+error_symbol = '[▶](bold cherry)'
+vimcmd_symbol = '[◀](bold sky)'
+vimcmd_visual_symbol = '[◀](bold lilac)'
+vimcmd_replace_symbol = '[◀](bold orange)'
+vimcmd_replace_one_symbol = '[◀](bold orange)'
 
-# ── Line 1, left: shapes ──────────────────────────────────────────────
 [fill]
 symbol = " "
 
-# Only appears over SSH.
+# ── Hero stats ────────────────────────────────────────────────────────
+[shlvl]
+disabled = false
+threshold = 1
+format = ' [Lv](fog)[$shlvl](bold paper)'
+
+# Five-cell bar in 10% steps; green, then yellow at 50%, red at 20%.
+[battery]
+full_symbol = "━━━━━"
+unknown_symbol = "━━━━━"
+empty_symbol = "─────"
+format = '  [HP](fog) [$symbol $percentage]($style)'
+
+[[battery.display]]
+threshold = 10
+style = "bold cherry"
+discharging_symbol = "╾────"
+charging_symbol = "╾────"
+
+[[battery.display]]
+threshold = 20
+style = "bold cherry"
+discharging_symbol = "━────"
+charging_symbol = "━────"
+
+[[battery.display]]
+threshold = 30
+style = "fg:lemon"
+discharging_symbol = "━╾───"
+charging_symbol = "━╾───"
+
+[[battery.display]]
+threshold = 40
+style = "fg:lemon"
+discharging_symbol = "━━───"
+charging_symbol = "━━───"
+
+[[battery.display]]
+threshold = 50
+style = "fg:lemon"
+discharging_symbol = "━━╾──"
+charging_symbol = "━━╾──"
+
+[[battery.display]]
+threshold = 60
+style = "fg:mint"
+discharging_symbol = "━━━──"
+charging_symbol = "━━━──"
+
+[[battery.display]]
+threshold = 70
+style = "fg:mint"
+discharging_symbol = "━━━╾─"
+charging_symbol = "━━━╾─"
+
+[[battery.display]]
+threshold = 80
+style = "fg:mint"
+discharging_symbol = "━━━━─"
+charging_symbol = "━━━━─"
+
+[[battery.display]]
+threshold = 90
+style = "fg:mint"
+discharging_symbol = "━━━━╾"
+charging_symbol = "━━━━╾"
+
+[[battery.display]]
+threshold = 100
+style = "fg:mint"
+discharging_symbol = "━━━━━"
+charging_symbol = "━━━━━"
+
+# ── Where you are, what you're doing ──────────────────────────────────
+# Only appears over SSH: which world you're in.
 [hostname]
 ssh_only = true
-format = '[▲ $hostname](bold orange)  '
+format = '   [world](fog) [$hostname](bold orange)'
 
-# ● where you are. In a repo the repo name is bold.
 [directory]
 truncation_length = 3
 truncation_symbol = "…/"
@@ -97,26 +174,25 @@ style = "fg:sky"
 read_only = " "
 read_only_style = "fg:cherry"
 repo_root_style = "bold sky"
-format = '[●](pink) [$path]($style)[$read_only]($read_only_style)'
-repo_root_format = '[●](pink) [$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style)'
+format = '   [](pink) [$path]($style)[$read_only]($read_only_style)'
+repo_root_format = '   [](pink) [$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style)'
 
-# ▲ which branch, then the commit it is on.
 [git_branch]
-format = '  [▲](lemon) [$branch](lilac)'
+format = '  [](gold) [$branch](lilac)'
 
 [git_commit]
 only_detached = false
 tag_disabled = false
 commit_hash_length = 7
 tag_symbol = " "
-format = ' [#$hash](fog)[$tag](lemon)'
+format = ' [#$hash](fog)[$tag](gold)'
 
 [git_state]
 format = ' [$state( $progress_current/$progress_total)](bold orange)'
 
 # + staged  ! modified  ? untracked  × deleted  * stashed  ↑↓ vs remote
 [git_status]
-format = '( [$conflicted$deleted](cherry)[$staged$renamed](mint)[$modified$typechanged](orange)[$untracked](pink)[$stashed](lilac)[$ahead_behind](sky))'
+format = '([$conflicted$deleted](cherry)[$staged$renamed](mint)[$modified$typechanged](orange)[$untracked](pink)[$stashed](lilac)[$ahead_behind](sky))'
 conflicted = ' =${count}'
 deleted = ' ×${count}'
 staged = ' +${count}'
@@ -130,66 +206,35 @@ behind = ' ↓${count}'
 diverged = ' ↑${ahead_count}↓${behind_count}'
 up_to_date = ''
 
-# ∆ lines added / removed since the last commit.
 [git_metrics]
 disabled = false
-format = '(  [∆](fog)( [+$added](mint))( [−$deleted](cherry)))'
+format = '(  [xp](fog)( [+$added](mint))( [−$deleted](cherry)))'
 
-# ── Line 1, right: words ──────────────────────────────────────────────
-# Exit code, only when the last command failed.
+# ── Status effects ────────────────────────────────────────────────────
 [status]
 disabled = false
-format = '  [×$status( $signal_name)](bold cherry)'
+format = '  [dmg](fog) [$status( $signal_name)](bold cherry)'
 
-# Only when the last command took 2s or more.
 [cmd_duration]
 min_time = 2000
-format = '  [took](fog) [$duration](lemon)'
+format = '  [cast](fog) [$duration](lemon)'
 
-# Background jobs (ctrl-z), only when there are any.
 [jobs]
 number_threshold = 1
 symbol_threshold = 1
-format = '  [jobs](fog) [$number](lilac)'
+format = '  [party](fog) [$number](lilac)'
 
-# Only when RAM use passes 85% (macOS idles around 75%).
 [memory_usage]
 disabled = false
 threshold = 85
-format = '  [mem](fog) [$ram_pct](orange)'
-
-# Only under 50%: a one-character level bar that drains as it goes.
-[battery]
-full_symbol = ""
-unknown_symbol = ""
-empty_symbol = "▁"
-format = '  [bat](fog) [$symbol $percentage]($style)'
-
-[[battery.display]]
-threshold = 10
-style = "bold cherry"
-discharging_symbol = "▁"
-charging_symbol = "▁"
-
-[[battery.display]]
-threshold = 25
-style = "fg:orange"
-discharging_symbol = "▂"
-charging_symbol = "▂"
-
-[[battery.display]]
-threshold = 50
-style = "fg:lemon"
-discharging_symbol = "▄"
-charging_symbol = "▄"
+format = '  [heavy](fog) [$ram_pct](orange)'
 
 [time]
 disabled = false
 time_format = "%R"
 format = '  [$time](mute) '
 
-# ── Line 2, right: toolchain ──────────────────────────────────────────
-# Each appears only in a project that uses it.
+# ── Equipment (line 2, right) ─────────────────────────────────────────
 [python]
 version_format = "${raw}"
 format = '  [py](fog) [$version](lemon)( [\($virtualenv\)](fog))'
@@ -234,7 +279,6 @@ format = '  [lua](fog) [$version](lilac)'
 version_format = "${raw}"
 format = '  [dart](fog) [$version](sky)'
 
-# Version from package.json, Cargo.toml, pyproject.toml, pubspec.yaml…
 [package]
 version_format = "${raw}"
 format = '  [pkg](fog) [$version](pink)'

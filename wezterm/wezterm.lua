@@ -18,7 +18,7 @@ config.window_background_opacity = 1.0
 config.macos_window_background_blur = 0
 
 -- Font Options
-config.font_size = 16
+config.font_size = 14
 config.font = wez.font("GeistMono Nerd Font")
 config.default_cursor_style = "SteadyBar"
 
@@ -68,7 +68,7 @@ config.colors = {
 
 -- Dimmer for background
 local dimmer = {
-	brightness = 0.05,
+	brightness = 0.125,
 	saturation = 1,
 }
 
